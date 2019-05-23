@@ -19,7 +19,7 @@ lazy val root = (project in file(".")).
       "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
       "Sonatype Snapshots"  at "http://oss.sonatype.org/content/repositories/snapshots",
     ),
-    name := "poc-streamer",
+    name := "opc-client-stream",
     libraryDependencies ++= Seq(
       "io.monix"           %% "monix"                % monixVersion,
       "com.typesafe.akka"  %% "akka-http"            % akkaHttpVersion,
