@@ -15,6 +15,14 @@ final case class AppConfig(
 final case class OpcConfig(
   serverEndPointUrl: String
 )
+final case class MqttConfig(
+  host: String,
+  port: Int
+)
+final case class KafkaConfig(
+  servers: String,
+  topics: String,
+  groupId: String)
 object AppConfig {
 
   def load(): AppConfig =

@@ -18,6 +18,7 @@ import scala.util.{ Failure, Success, Try }
 // TODO: For the time being, we use this default global thread pool
 import scala.concurrent.ExecutionContext.Implicits.global
 
+
 final class OpcClient(opcConfig: OpcConfig) {
 
   private val logger = Logger.of[OpcClient]
