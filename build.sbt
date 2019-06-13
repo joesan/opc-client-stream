@@ -6,7 +6,7 @@ lazy val monixVersion   = "3.0.0-RC2"
 lazy val airframeLogVersion = "0.50"
 lazy val scalaTestVersion = "3.0.5"
 lazy val opcClientVersion = "0.3.0-SNAPSHOT"
-lazy val mqttClientVersion = "3.7.1"
+lazy val mqttClientVersion = "1.0.2"
 lazy val scalaAsyncVersion = "0.10.0"
 lazy val scalaJavaCompactVersion = "0.9.0"
 lazy val monixKafkaClientVersion = "1.0.0-RC3"
@@ -20,6 +20,7 @@ lazy val root = (project in file(".")).
     resolvers ++= Seq(
       "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
       "Sonatype Snapshots"  at "http://oss.sonatype.org/content/repositories/snapshots",
+      "MQTT Repository"     at "https://repo.eclipse.org/content/repositories/paho-releases/"
     ),
     name := "opc-client-stream",
     libraryDependencies ++= Seq(
@@ -30,9 +31,9 @@ lazy val root = (project in file(".")).
       "com.typesafe.akka"  %% "akka-stream"          % akkaVersion,
 
       // For all connectors / sources / sinks
-      "org.eclipse.milo"   %  "sdk-client"           % opcClientVersion,
-      "io.vertx"           %% "vertx-mqtt-scala"     % mqttClientVersion,
-      "io.monix"           %% "monix-kafka-1x"       % monixKafkaClientVersion,
+      "org.eclipse.milo"   %  "sdk-client"               % opcClientVersion,
+      "com.lightbend.akka" %% "akka-stream-alpakka-mqtt" % mqttClientVersion,
+      "io.monix"           %% "monix-kafka-1x"           % monixKafkaClientVersion,
 
       // For dealing with logging
       "org.wvlet.airframe" %% "airframe-log"         % airframeLogVersion,

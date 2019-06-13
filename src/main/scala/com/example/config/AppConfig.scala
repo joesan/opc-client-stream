@@ -16,8 +16,10 @@ final case class OpcConfig(
   serverEndPointUrl: String
 )
 final case class MqttConfig(
-  host: String,
-  port: Int
+  url: String,
+  topic: String,
+  clientId: String = "default-client-id",
+  persistenceDir: Option[String]
 )
 final case class KafkaConfig(
   servers: String,

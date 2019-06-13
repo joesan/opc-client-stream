@@ -15,6 +15,7 @@ import scala.compat.java8.FutureConverters
 import scala.util.control.NonFatal
 import scala.util.{ Failure, Success }
 
+
 class OpcClientSpec extends UnitSpec with BeforeAndAfterAll {
 
   private val logger = Logger.of[OpcClientSpec]
@@ -78,9 +79,9 @@ class OpcClientSpec extends UnitSpec with BeforeAndAfterAll {
         FutureConverters.toScala(client.getAddressSpace.browse(browseRoot)),
         Duration.Inf).asScala
       for (node <- nodes) {
-        logger.info("{} Node={}", indent, node.getBrowseName.get.getName)
+        logger.info(s"$indent, ${node.getBrowseName.get.getName}")
         // recursively browse to children
-        browseNode(indent + "  ", client, node.getNodeId.get)
+        browseNode(indent + "  ", client, node.getNodeId.get())
       }
     } catch {
       case NonFatal(ex) =>

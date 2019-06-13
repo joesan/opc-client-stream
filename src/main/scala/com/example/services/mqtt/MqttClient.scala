@@ -1,27 +1,41 @@
 package com.example.services.mqtt
 
 import com.example.config.MqttConfig
-import io.vertx.scala.core.Vertx
-import io.vertx.scala.core.net.PemKeyCertOptions
-import io.vertx.scala.mqtt.{MqttClient, MqttClientOptions}
+import org.eclipse.paho.client.mqttv3.{ IMqttDeliveryToken, MqttCallback, MqttMessage }
+import org.eclipse.paho.client.mqttv3.{ MqttClient => MqttPahoClient }
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
+import wvlet.log.Logger
 
-import scala.util.{Failure, Success}
+import scala.util.{ Failure, Success, Try }
 
-// TODO: For the time being, we use this default global thread pool
-import scala.concurrent.ExecutionContext.Implicits.global
+trait MqttClient {
 
+  def client: Try[MqttPahoClient]
+}
+object MqttClient {
 
-class MqttClient(cfg: MqttConfig) {
+  final class MqttSubscriber(cfg: MqttConfig, someCallback: Option[MqttCallback] = None) extends MqttClient {
 
-  var options = MqttClientOptions()
-    .setPemKeyCertOptions(PemKeyCertOptions()
-      .setKeyPath("./src/test/resources/tls/server-key.pem")
-      .setCertPath("./src/test/resources/tls/server-cert.pem"))
-    .setSsl(true)
+    private val logger = Logger.of[MqttSubscriber]
 
-  var mqttClient = MqttClient.create(Vertx.vertx(), options)
-  mqttClient.connectFuture(cfg.port, cfg.host).onComplete {
-    case Success(result) => println("Success")
-    case Failure(cause) => println("Failure")
+    val callback: MqttCallback = someCallback.getOrElse(new MqttCallback {
+      override def messageArrived(topic: String, message: MqttMessage): Unit = {
+        logger.info("Using Default Console Callback --> Receiving Data, Topic : %s, Message : %s".format(topic, message))
+      }
+      override def connectionLost(cause: Throwable): Unit = {
+        logger.info(cause)
+      }
+      override def deliveryComplete(token: IMqttDeliveryToken): Unit = {
+
+      }
+    })
+
+    def client: Try[MqttPahoClient] = Try {
+      val persistence = new MemoryPersistence
+      new MqttPahoClient(s"${cfg.url}", MqttPahoClient.generateClientId, persistence)
+      // TODO: Remove the lines below as Connection happens in the Observable
+      //client.connect()
+      //client
+    }
   }
 }
