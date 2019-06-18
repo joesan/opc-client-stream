@@ -19,7 +19,7 @@ final case class MqttConfig(
   url: String,
   topic: String,
   clientId: String = "default-client-id",
-  persistenceDir: Option[String]
+  persistenceDir: Option[String] = None
 )
 final case class KafkaConfig(
   servers: String,

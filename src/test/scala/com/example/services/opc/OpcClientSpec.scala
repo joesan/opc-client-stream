@@ -15,7 +15,6 @@ import scala.compat.java8.FutureConverters
 import scala.util.control.NonFatal
 import scala.util.{ Failure, Success }
 
-
 class OpcClientSpec extends UnitSpec with BeforeAndAfterAll {
 
   private val logger = Logger.of[OpcClientSpec]

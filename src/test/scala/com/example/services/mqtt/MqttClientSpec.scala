@@ -1,7 +1,9 @@
 package com.example.services.mqtt
 
 import com.example.UnitSpec
-import org.eclipse.paho.client.mqttv3.{ MqttConnectOptions, MqttClient => MqttPahoClient }
+import com.example.config.MqttConfig
+import com.example.services.mqtt.MqttClient.MqttSubscriber
+import org.eclipse.paho.client.mqttv3.{ IMqttDeliveryToken, MqttCallback, MqttConnectOptions, MqttMessage, MqttClient => MqttPahoClient }
 import monix.eval.Task
 import monix.execution.Cancelable
 import monix.execution.cancelables.BooleanCancelable
@@ -43,6 +45,7 @@ class MqttClientSpec extends UnitSpec with BeforeAndAfterAll {
       val persistence = new MemoryPersistence
       val mqttClient = new MqttPahoClient(s"tcp://localhost:1883", MqttPahoClient.generateClientId, persistence)
       mqttClient.connect(mqttConnectOptions)
+      //mqttClient.setCallback(mqttClient.)
       mqttClient
     }
 
@@ -62,5 +65,13 @@ class MqttClientSpec extends UnitSpec with BeforeAndAfterAll {
     val mqttClientTask = connect()
     val result = Await.result(mqttClientTask.runToFuture, Duration.Inf)
     println(result.getServerURI)
+  }
+
+  "connect with Observable" should "connect to mqtt" in {
+    val mqttCfg = MqttConfig(s"tcp://localhost:1883", "state")
+    //val observable = new MqttObservable[String](mqttCfg, new MqttObserver[String])
+    val subscriber = new MqttObserver[String]
+    // This should do the trick!
+    //observable.unsafeSubscribeFn(subscriber)
   }
 }

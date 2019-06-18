@@ -10,6 +10,7 @@ lazy val mqttClientVersion = "1.0.2"
 lazy val scalaAsyncVersion = "0.10.0"
 lazy val scalaJavaCompactVersion = "0.9.0"
 lazy val monixKafkaClientVersion = "1.0.0-RC3"
+lazy val jodaTimeVersion = "2.10.2"
 
 lazy val root = (project in file(".")).
   settings(
@@ -29,6 +30,7 @@ lazy val root = (project in file(".")).
       "com.typesafe.akka"  %% "akka-http-spray-json" % akkaHttpVersion,
       "com.typesafe.akka"  %% "akka-http-xml"        % akkaHttpVersion,
       "com.typesafe.akka"  %% "akka-stream"          % akkaVersion,
+      "joda-time"           % "joda-time"            % jodaTimeVersion,
 
       // For all connectors / sources / sinks
       "org.eclipse.milo"   %  "sdk-client"               % opcClientVersion,
@@ -41,6 +43,12 @@ lazy val root = (project in file(".")).
       // For dealing with Java futures and scala future handling
       "org.scala-lang.modules" %% "scala-java8-compat" % scalaJavaCompactVersion,
       "org.scala-lang.modules" %% "scala-async"        % scalaAsyncVersion,
+      
+      // For dealing with linear optimizer (TODO: Remove this after experimentation)
+      "org.scalanlp" %% "breeze" % "0.13.2",
+      "com.github.vagmcs" %% "optimus" % "2.1.0",
+      "com.github.vagmcs" %% "optimus-solver-oj" % "2.1.0",
+      "com.datumbox" % "lpsolve" % "5.5.2.0",
 
       "com.typesafe.akka"  %% "akka-http-testkit"    % akkaHttpVersion  % Test,
       "com.typesafe.akka"  %% "akka-testkit"         % akkaVersion      % Test,
