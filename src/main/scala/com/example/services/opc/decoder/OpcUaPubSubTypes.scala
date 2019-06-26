@@ -4,15 +4,15 @@ import java.util.UUID
 import org.joda.time._
 
 /**
-  * Translate this:
-  *   https://github.com/open62541/open62541/blob/master/src/pubsub/ua_pubsub_networkmessage.h
-  *   https://github.com/open62541/open62541/blob/master/src/ua_types.c
-  */
+ * Translate this:
+ *   https://github.com/open62541/open62541/blob/master/src/pubsub/ua_pubsub_networkmessage.h
+ *   https://github.com/open62541/open62541/blob/master/src/ua_types.c
+ */
 object OpcUaPubSubTypes {
 
   sealed trait PublisherIdDataType
   object PublisherIdDataType {
-    case object BYTE   extends PublisherIdDataType
+    case object BYTE extends PublisherIdDataType
     case object UINT16 extends PublisherIdDataType
     case object UINT64 extends PublisherIdDataType
     case object STRING extends PublisherIdDataType
@@ -20,23 +20,23 @@ object OpcUaPubSubTypes {
 
   sealed trait DataSetMessageType
   object DataSetMessageType {
-    case object DATAKEYFRAME   extends DataSetMessageType
+    case object DATAKEYFRAME extends DataSetMessageType
     case object DATADELTAFRAME extends DataSetMessageType
-    case object EVENT          extends DataSetMessageType
-    case object KEEPALIVE      extends DataSetMessageType
+    case object EVENT extends DataSetMessageType
+    case object KEEPALIVE extends DataSetMessageType
   }
 
   sealed trait FieldEncoding
   object FieldEncoding {
-    case object VARIANT   extends FieldEncoding
-    case object RAWDATA   extends FieldEncoding
+    case object VARIANT extends FieldEncoding
+    case object RAWDATA extends FieldEncoding
     case object DATAVALUE extends FieldEncoding
   }
 
   sealed trait NetworkMessageType
   object NetworkMessageType {
-    case object DATASET  extends NetworkMessageType
-    case object REQUEST  extends NetworkMessageType
+    case object DATASET extends NetworkMessageType
+    case object REQUEST extends NetworkMessageType
     case object RESPONSE extends NetworkMessageType
   }
 
@@ -70,7 +70,7 @@ object OpcUaPubSubTypes {
   )
 
   case class DataValue(
-    value: Variant,
+    //value: Variant,
     sourceTimestamp: DateTime,
     serverTimestamp: DateTime,
     sourcePicoseconds: Short,
@@ -81,8 +81,7 @@ object OpcUaPubSubTypes {
     hasSourceTimestamp: Boolean,
     hasServerTimestamp: Boolean,
     hasSourcePicoseconds: Boolean,
-    hasServerPicoseconds: Boolean
-  )
+    hasServerPicoseconds: Boolean)
 
   case class DataSetPayloadHeader(count: Byte, dataSetWriterIds: Seq[Short])
 
@@ -94,8 +93,7 @@ object OpcUaPubSubTypes {
   case class DataSetMessage(
     header: DataSetMessageHeader,
     keyFrameData: DataKeyFrameData,
-    deltaFrameData: DataDeltaFrameData
-  )
+    deltaFrameData: DataDeltaFrameData)
 
   case class NetworkMessage(
     version: Byte,
@@ -123,9 +121,8 @@ object OpcUaPubSubTypes {
     timestamp: DateTime,
     picoseconds: Int, // UINT16
     promotedFieldsSize: Int, // UINT16
-    promotedFields: Seq[Variant],
+    //promotedFields: Seq[Variant],
     dataSetPayload: DataSetPayload,
     securityFooter: String,
-    signature: String
-  )
+    signature: String)
 }
