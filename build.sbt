@@ -21,6 +21,7 @@ lazy val root = (project in file(".")).
     resolvers ++= Seq(
       "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
       "Sonatype Snapshots"  at "http://oss.sonatype.org/content/repositories/snapshots",
+      "Sonatype Public" at "https://oss.sonatype.org/content/groups/public/",
       "MQTT Repository"     at "https://repo.eclipse.org/content/repositories/paho-releases/"
     ),
     name := "opc-client-stream",
@@ -31,6 +32,9 @@ lazy val root = (project in file(".")).
       "com.typesafe.akka"  %% "akka-http-xml"        % akkaHttpVersion,
       "com.typesafe.akka"  %% "akka-stream"          % akkaVersion,
       "joda-time"           % "joda-time"            % jodaTimeVersion,
+
+      "org.scodec"         %% "scodec-bits"          % "1.1.6",
+      "com.softwaremill.quicklens" %% "quicklens"    % "1.4.12",
 
       // For all connectors / sources / sinks
       "org.eclipse.milo"   %  "sdk-client"               % opcClientVersion,
